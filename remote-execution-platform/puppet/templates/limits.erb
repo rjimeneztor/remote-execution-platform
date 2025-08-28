@@ -1,0 +1,21 @@
+# Límites para el usuario platform
+platform soft nofile 65536
+platform hard nofile 65536
+platform soft nproc 32768
+platform hard nproc 32768
+platform soft memlock unlimited
+platform hard memlock unlimited
+
+# Límites para Docker
+root soft nofile 65536
+root hard nofile 65536
+
+# Límites para Node Exporter
+node_exporter soft nofile 8192
+node_exporter hard nofile 8192
+node_exporter soft nproc 4096
+node_exporter hard nproc 4096
+
+# Límites generales del sistema
+* soft core 0
+* hard core 0
