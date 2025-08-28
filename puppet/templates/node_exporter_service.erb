@@ -1,0 +1,23 @@
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+Type=simple
+User=node_exporter
+Group=node_exporter
+ExecStart=/usr/local/bin/node_exporter \
+    --web.listen-address=:9100 \
+    --path.procfs=/proc \
+    --path.sysfs=/sys \
+    --collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)" \
+    --collector.filesystem.ignored-fs-types="^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$$"
+
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=node_exporter
+
+[Install]
+WantedBy=multi-user.target

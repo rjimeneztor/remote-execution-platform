@@ -1,0 +1,31 @@
+[Unit]
+Description=Remote Execution Platform
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/platform/remote-execution-platform
+User=platform
+Group=platform
+
+# Comando para iniciar
+ExecStart=/usr/local/bin/docker-compose up -d
+
+# Comando para detener
+ExecStop=/usr/local/bin/docker-compose down
+
+# Comando para recargar
+ExecReload=/usr/local/bin/docker-compose restart
+
+# Reiniciar en caso de fallo
+Restart=on-failure
+RestartSec=10
+
+# Variables de entorno
+Environment=COMPOSE_PROJECT_NAME=remote_execution_platform
+Environment=COMPOSE_FILE=docker-compose.yml
+
+[Install]
+WantedBy=multi-user.target

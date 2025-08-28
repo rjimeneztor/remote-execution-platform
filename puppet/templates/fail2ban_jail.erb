@@ -1,0 +1,68 @@
+[DEFAULT]
+# Configuración por defecto
+bantime = 3600
+findtime = 600
+maxretry = 3
+backend = systemd
+
+# Ignorar IPs locales
+ignoreip = 127.0.0.1/8 ::1 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
+
+# Configuración de email (opcional)
+# destemail = admin@yourdomain.com
+# sender = fail2ban@yourdomain.com
+# mta = sendmail
+
+[sshd]
+enabled = true
+port = ssh
+logpath = /var/log/auth.log
+maxretry = 5
+bantime = 7200
+
+[nginx-http-auth]
+enabled = true
+port = http,https
+logpath = /opt/platform/logs/nginx/error.log
+maxretry = 3
+findtime = 600
+bantime = 3600
+
+[nginx-limit-req]
+enabled = true
+port = http,https
+logpath = /opt/platform/logs/nginx/error.log
+failregex = limiting requests, excess: .* by zone .*, client: <HOST>
+maxretry = 2
+findtime = 300
+bantime = 1800
+
+[platform-api]
+enabled = true
+port = http,https
+logpath = /opt/platform/logs/backend/backend.log
+failregex = ^.*Authentication failed.*client_ip=<HOST>.*$
+            ^.*Invalid token.*client_ip=<HOST>.*$
+            ^.*Brute force attempt.*client_ip=<HOST>.*$
+maxretry = 5
+findtime = 600
+bantime = 3600
+
+[platform-telegram]
+enabled = true
+port = http,https
+logpath = /opt/platform/logs/telegram/telegram.log
+failregex = ^.*Unauthorized access attempt.*from=<HOST>.*$
+            ^.*Invalid telegram token.*from=<HOST>.*$
+maxretry = 3
+findtime = 300
+bantime = 1800
+
+[docker-auth]
+enabled = true
+port = 2376
+logpath = /var/log/docker.log
+failregex = ^.*level=error.*authentication failure.*remoteIP=<HOST>.*$
+maxretry = 3
+findtime = 600
+bantime = 3600
