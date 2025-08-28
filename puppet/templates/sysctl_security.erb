@@ -1,0 +1,73 @@
+# Configuración de seguridad del kernel para la plataforma
+
+# Protección contra IP spoofing
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+
+# Desactivar IP forwarding (a menos que sea necesario)
+net.ipv4.ip_forward = 0
+net.ipv6.conf.all.forwarding = 0
+
+# Desactivar redirects ICMP
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
+
+# Desactivar source routing
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv6.conf.all.accept_source_route = 0
+net.ipv6.conf.default.accept_source_route = 0
+
+# Activar secure redirects
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.secure_redirects = 0
+
+# Log de paquetes sospechosos
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.conf.default.log_martians = 1
+
+# Ignorar ping broadcasts
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# Ignorar respuestas ICMP erróneas
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+
+# Activar SYN cookies para protección contra SYN flood
+net.ipv4.tcp_syncookies = 1
+
+# Configuración de memoria compartida
+kernel.shmmax = 68719476736
+kernel.shmall = 4294967296
+
+# Restricciones de acceso a dmesg
+kernel.dmesg_restrict = 1
+
+# Restricciones de acceso a kernel pointers
+kernel.kptr_restrict = 2
+
+# Configuración de swap
+vm.swappiness = 10
+vm.vfs_cache_pressure = 50
+
+# Configuración de red para Docker
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+
+# Configuración de file descriptors
+fs.file-max = 2097152
+
+# Configuración de procesos
+kernel.pid_max = 4194304
+
+# Configuración de TCP
+net.core.somaxconn = 65535
+net.core.netdev_max_backlog = 5000
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+net.ipv4.tcp_keepalive_probes = 9
+net.ipv4.tcp_keepalive_intvl = 75
