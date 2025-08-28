@@ -1,0 +1,36 @@
+/opt/platform/logs/*.log {
+    daily
+    missingok
+    rotate 30
+    compress
+    delaycompress
+    notifempty
+    create 644 platform platform
+    postrotate
+        systemctl reload remote-execution-platform || true
+    endscript
+}
+
+/opt/platform/logs/*/*.log {
+    daily
+    missingok
+    rotate 30
+    compress
+    delaycompress
+    notifempty
+    create 644 platform platform
+    postrotate
+        systemctl reload remote-execution-platform || true
+    endscript
+}
+
+# Logs específicos de Docker
+/var/lib/docker/containers/*/*.log {
+    daily
+    missingok
+    rotate 7
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}
